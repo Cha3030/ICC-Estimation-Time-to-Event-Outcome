@@ -124,8 +124,9 @@ icc_estimation <- function(data) {
   } else { icc_event <- NA }
   
   # --- Method 6: Exponential-Normal Approximation (Oliveira et al., 2016)
-  # Special case of the Weibull–Normal model. Fits a  survival model with a single
-  # log-normal frailty for clustering. The ICC is computed using a theoretical
+  # Special case of the Weibull–Normal model.
+  # It is adapted using a 'coxme' model with a log-normal frailty (Gaussian random 
+  # intercept) to represent the clustering.The ICC is computed using a theoretical
   # formula based on frailty variance to determine the cluster effect proportion.
   icc_exp_norm_fit <- tryCatch({
     coxme(Surv(eventtime, status) ~ 1 + (1|hospital), data = data)
